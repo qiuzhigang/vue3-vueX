@@ -34,6 +34,11 @@ const routes = [
     path: '/qisolt',
     name: 'qisolt',
     component: () => import('../components/qisolt.vue')
+  },
+  {
+    path: '/helloworld',
+    name: 'helloworld',
+    component: () => import('../components/HelloWorld.vue')
   }
 ]
 

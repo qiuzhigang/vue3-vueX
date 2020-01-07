@@ -3,6 +3,7 @@
     <router-link to="/login">
       <button>去登陆</button>
     </router-link>
+    <el-button type="success" @click="gotoEL">去欣赏页面</el-button>
   </div>
 </template>
 
@@ -12,8 +13,7 @@ import { mapState, mapGetters } from "vuex";
 export default {
   name: "home",
   return() {
-    data:{
-      
+    data: {
     }
   },
   methods: {
@@ -22,6 +22,9 @@ export default {
     },
     decrementCount() {
       this.$store.commit("incermentCount", 1);
+    },
+    gotoEL() {
+      this.$router.push({ path: "/hellowrold" });
     }
   },
   created() {},

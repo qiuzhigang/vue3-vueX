@@ -2,24 +2,27 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import element from '../src/assets/js/element'
 import axios from 'axios'
 axios.defaults.baseURL = 'http://jsonplaceholder.typicode.com';    // 配置全局公共接口
 Vue.prototype.axios = axios;                                       // 配置全局axios
 // console.log(process.env.VUE_APP_URL)
 Vue.config.productionTip = false,
+  Vue.use(element);     // ui组件单独抽离
 
-  // 设置路由title 登录拦截
-  router.beforeEach((to, from, next) => {
-    /*路由变化修改title*/
-    if (to.meta.title) {
-      document.title = to.meta.title;
-      // 模拟存储token
-      window.localStorage.setItem('token', 123456);
-    } else {
-      next();
-    }
+// 设置路由title 登录拦截
+router.beforeEach((to, from, next) => {
+  /*路由变化修改title*/
+  if (to.meta.title) {
+    document.title = to.meta.title;
+    // 模拟存储token
+    window.localStorage.setItem('token', 123456);
+  } else {
     next();
-  }),
+  }
+  next();
+}),
+
 
   //请求拦截器
   axios.interceptors.request.use(config => {
