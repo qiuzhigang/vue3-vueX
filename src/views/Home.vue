@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="header_q">
-      <el-menu
+      <!-- <el-menu
         :default-active="activeIndex2"
         class="el-menu-demo"
         mode="horizontal"
@@ -14,6 +14,43 @@
           {{item.name}}
           <el-menu-item v-for="(i,index) in item.address" :key="index">{{i}}</el-menu-item>
         </el-menu-item>
+      </el-menu>-->
+      <el-menu
+        :default-active="activeIndex2"
+        class="el-menu-demo"
+        mode="horizontal"
+        @select="handleSelect"
+        background-color="#545c64"
+        text-color="#fff"
+        active-text-color="#ffd04b"
+      >
+      <div v-for="item in Headers_list" :key="item.key">
+          
+      </div>
+        <el-menu-item  :v-if="item.address">{{item.name}}</el-menu-item>
+
+        <el-submenu index="1" v-for="(item, i) in Headers_list"  :key="i" >
+          <template slot="title">{{item.name}}</template>
+          <el-menu-item index="2-1" v-for="(add,key) in item.address" :key="key">{{add}}</el-menu-item>
+        </el-submenu>
+        <!-- 
+        <el-submenu index="2">
+          <template slot="title">我的工作台</template>
+          <el-menu-item index="2-2">选项2</el-menu-item>
+          <el-menu-item index="2-3">选项3</el-menu-item>
+          <el-submenu index="2-4">
+            <template slot="title">选项4</template>
+            <el-menu-item index="2-4-1">选项1</el-menu-item>
+            <el-menu-item index="2-4-2">选项2</el-menu-item>
+            <el-menu-item index="2-4-3">选项3</el-menu-item>
+          </el-submenu>
+        </el-submenu>
+
+
+        <el-menu-item index="3">消息中心</el-menu-item>
+        <el-menu-item index="4">
+          <a href="https://www.ele.me" target="_blank">订单管理</a>
+        </el-menu-item>-->
       </el-menu>
     </div>
     <div class="ql_main">
@@ -43,21 +80,21 @@ export default {
       mmt: [],
       Headers_list: [
         {
-          id: 1,
-          name: "首页"
+          key: 1,
+          name: "处理中心"
         },
         {
-          id: 2,
-          name: "我的消息",
+          key: 2,
+          name: "我的工作台",
           address: ["选项一", "选项一", "选项一"]
         },
         {
-          id: 1,
-          name: "Leanne Graham"
+          key: 3,
+          name: "消息中心"
         },
         {
-          id: 1,
-          name: "Leanne Graham"
+          key: 4,
+          name: "订单管理"
         }
       ]
     };
