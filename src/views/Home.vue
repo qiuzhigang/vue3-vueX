@@ -10,11 +10,14 @@
         text-color="#fff"
         active-text-color="#ffd04b"
       >
-        <el-menu-item v-for="(item, i) in Headers_list" :key="i">
-          {{item.name}}
-          <el-menu-item v-for="(i,index) in item.address" :key="index">{{i}}</el-menu-item>
-        </el-menu-item>
+        <el-menu-item v-for="(item,i) in Headers_list" :key="i" v-if="!item.address">{{item.name}}</el-menu-item>
+
+        <el-submenu v-for="(item, i) in Headers_list" :key="i" :index="2" v-if="item.address">
+          <template slot="title">{{item.name}}</template>
+          <el-menu-item index="2-1" v-for="(add,key) in item.address" :key="key">{{add}}</el-menu-item>
+        </el-submenu>
       </el-menu>-->
+
       <el-menu
         :default-active="activeIndex2"
         class="el-menu-demo"
@@ -24,33 +27,26 @@
         text-color="#fff"
         active-text-color="#ffd04b"
       >
-      <div v-for="item in Headers_list" :key="item.key">
-          
-      </div>
-        <el-menu-item  :v-if="item.address">{{item.name}}</el-menu-item>
+        <div v-for="(item,i) in Headers_list" :key="i" index="i" class="ql_nav">
+          <el-menu-item :index="item.key" v-if="item.child == undefined">{{item.name}}</el-menu-item>
 
-        <el-submenu index="1" v-for="(item, i) in Headers_list"  :key="i" >
-          <template slot="title">{{item.name}}</template>
-          <el-menu-item index="2-1" v-for="(add,key) in item.address" :key="key">{{add}}</el-menu-item>
-        </el-submenu>
-        <!-- 
-        <el-submenu index="2">
-          <template slot="title">我的工作台</template>
-          <el-menu-item index="2-2">选项2</el-menu-item>
-          <el-menu-item index="2-3">选项3</el-menu-item>
-          <el-submenu index="2-4">
-            <template slot="title">选项4</template>
-            <el-menu-item index="2-4-1">选项1</el-menu-item>
-            <el-menu-item index="2-4-2">选项2</el-menu-item>
-            <el-menu-item index="2-4-3">选项3</el-menu-item>
+          <el-submenu :index="item.key" v-if="item.child">
+            <template slot="title">{{item.name}}</template>
+
+            <div v-for="(cty,indexs) in item.child" :key="indexs">
+              <el-menu-item v-if="cty.child == undefined" :index="cty.key">{{cty.name}}</el-menu-item>
+
+              <el-submenu :index="cty.key" v-if="cty.child">
+                <template slot="title">{{cty.name}}</template>
+                <el-menu-item
+                  :index="item.key"
+                  v-for="(item,it) in cty.child"
+                  :key="it"
+                >{{item.name}}</el-menu-item>
+              </el-submenu>
+            </div>
           </el-submenu>
-        </el-submenu>
-
-
-        <el-menu-item index="3">消息中心</el-menu-item>
-        <el-menu-item index="4">
-          <a href="https://www.ele.me" target="_blank">订单管理</a>
-        </el-menu-item>-->
+        </div>
       </el-menu>
     </div>
     <div class="ql_main">
@@ -60,11 +56,6 @@
         <span>话如其声！</span>
       </p>
     </div>
-
-    <!-- <router-link to="/login">
-      <button>去登陆</button>
-    </router-link>
-    <el-button type="success" @click="gotoEL">去欣赏页面</el-button>-->
   </div>
 </template>
 
@@ -80,20 +71,39 @@ export default {
       mmt: [],
       Headers_list: [
         {
-          key: 1,
+          key: "1",
           name: "处理中心"
         },
         {
-          key: 2,
-          name: "我的工作台",
-          address: ["选项一", "选项一", "选项一"]
+          key: "2",
+          name: "广东省",
+          child: [
+            {
+              key: "21",
+              name: "深圳市",
+              child: [
+                {
+                  key: "22",
+                  name: "南山区"
+                },
+                {
+                  key: "23",
+                  name: "宝安区"
+                }
+              ]
+            },
+            {
+              key: "24",
+              name: "惠州市"
+            }
+          ]
         },
         {
-          key: 3,
+          key: "3",
           name: "消息中心"
         },
         {
-          key: 4,
+          key: "4",
           name: "订单管理"
         }
       ]
@@ -146,7 +156,11 @@ export default {
   display: flex;
   flex-direction: column;
   flex: 110%;
-
+  .ql_nav {
+    display: inline-block;
+    align-items: center;
+    color: red;
+  }
   .ql_main {
     margin: auto;
     p {
