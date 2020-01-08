@@ -1,23 +1,6 @@
 <template>
   <div class="home">
     <div class="header_q">
-      <!-- <el-menu
-        :default-active="activeIndex2"
-        class="el-menu-demo"
-        mode="horizontal"
-        @select="handleSelect"
-        background-color="#545c64"
-        text-color="#fff"
-        active-text-color="#ffd04b"
-      >
-        <el-menu-item v-for="(item,i) in Headers_list" :key="i" v-if="!item.address">{{item.name}}</el-menu-item>
-
-        <el-submenu v-for="(item, i) in Headers_list" :key="i" :index="2" v-if="item.address">
-          <template slot="title">{{item.name}}</template>
-          <el-menu-item index="2-1" v-for="(add,key) in item.address" :key="key">{{add}}</el-menu-item>
-        </el-submenu>
-      </el-menu>-->
-
       <el-menu
         :default-active="activeIndex2"
         class="el-menu-demo"
@@ -60,8 +43,6 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
-
 export default {
   name: "home",
   data() {
@@ -125,29 +106,7 @@ export default {
   created() {
     this.getdata();
   },
-  components: {},
-
-  // computed:{
-  //   count(){
-  //     return this.$store.state.count;
-  //   },
-  //   todos(){
-  //     return this.$store.state.todos;
-  //   }
-  // }
-  //  写法2
-  //  computed: mapState({
-  //    count:state => state.count,
-  //    todos:state => state.todos
-  //  })
-  // 写法3
-  //  computed:mapState(['count','todos'])
-  // computed:{
-  //   doneTodosCount(){
-  //     return this.$store.state.todos.filter(todo=>todo.mont).length;
-  //   }
-  // }
-  computed: mapGetters(["doneTodos", "count"])
+  components: {}
 };
 </script>
 <style lang="scss">
