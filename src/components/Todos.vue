@@ -25,6 +25,10 @@ export default {
     deleitem(i) {
       console.log(this.todos);
       this.todos.splice(i, 1);
+      this.$message({
+        message: "已删除！",
+        type: "warning"
+      });
     },
     enter_huicar(e) {
       if (e.keyCode == 13) {
@@ -32,6 +36,10 @@ export default {
         this.todos.push({
           title: _ccy,
           completed: false
+        });
+        this.$message({
+          message: "添加成功",
+          type: "success"
         });
         // this.todos=this.todos;
         (this.$refs.addvalue.value = ""), console.log(this.todos);
@@ -42,7 +50,7 @@ export default {
     this.axios
       .get("/todos")
       .then(res => {
-        this.todos = res.data;
+        this.todos = res.data.slice(0, 20);
       })
       .catch(error => {
         console, log(error);
